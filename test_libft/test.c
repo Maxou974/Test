@@ -6,7 +6,7 @@
 /*   By: mabriel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 17:32:54 by mabriel           #+#    #+#             */
-/*   Updated: 2022/04/20 07:50:36 by mabriel          ###   ########.fr       */
+/*   Updated: 2022/04/20 08:49:59 by mabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,7 +442,12 @@ void	test_strncmp()
 	
 	for (int i = 0; i < 20; i++)
 	{
-		if (ft_strncmp(s1, s2, i) != strncmp(s1, s2, i) && i != 13)
+		if (ft_strncmp(s1, s2, i) != strncmp(s1, s2, i) && i < 13)
+		{
+			printf("%d  Pas bon 🙁\n", i);
+			return ;
+		}
+		else if (ft_strncmp(s1, s2, i) >= 0 && strncmp(s1, s2, i) >= 0 && i >= 13)
 		{
 			printf("%d  Pas bon 🙁\n", i);
 			return ;
