@@ -6,11 +6,11 @@
 /*   By: mabriel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 17:32:54 by mabriel           #+#    #+#             */
-/*   Updated: 2022/04/20 06:17:33 by mabriel          ###   ########.fr       */
+/*   Updated: 2022/04/20 07:43:49 by mabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../libft.h"
+#include "../../libft.h"
 #include "stdio.h"
 #include <string.h>
 
@@ -224,6 +224,7 @@ void	test_memset()
 		if (b[i] != c)
 		{
 			putstr(" Pas bon 🙁");
+			free(b);
 			return ;
 		}
 		i++;
@@ -231,9 +232,11 @@ void	test_memset()
 	if (b != ft_memset(b,c + 1,0))
 	{
 			putstr(" Pas bon 🙁");
+			free(b);
 			return ;
 	}
 	green();
+	free(b);
 	putstr(" Bravo");
 	reset_color();
 }
@@ -250,10 +253,12 @@ void	test_bzero()
 		if (b[i] != '\0')
 		{
 			putstr(" Pas bon 🙁");
+			free(b);
 			return ;
 		}
 		i++;
 	}
+	free(b);
 	green();
 	putstr(" Bravo");
 	reset_color();
@@ -269,8 +274,10 @@ void	test_memcpy()
 	if (strncmp(src, dest, 3) != 0)
 	{
 		putstr("  Pas bon 🙁");
+		free(dest);
 		return ;
 	}
+	free(dest);
 	green();
 	putstr(" Bravo");
 	reset_color();
@@ -353,7 +360,7 @@ void	test_tolower()
 		{
 			if (ft_tolower(i) != i + 32)
 			{
-				putstr("4  Pas bon 🙁");
+				printf("1|%d  Pas bon 🙁\n", i);
 				return ;
 			}
 		}
@@ -361,7 +368,7 @@ void	test_tolower()
 		{
 			if (ft_tolower(i) != i)
 			{
-				putstr("4  Pas bon 🙁");
+				printf("2|%d  Pas bon 🙁\n", i);
 				return ;
 			}
 		}
@@ -369,7 +376,7 @@ void	test_tolower()
 		{
 			if (ft_tolower(i) != i)
 			{
-				putstr("4  Pas bon 🙁");
+				printf("3|%d  Pas bon 🙁\n", i);
 				return ;
 			}
 		}
@@ -437,8 +444,7 @@ void	test_strncmp()
 	{
 		if (ft_strncmp(s1, s2, i) != strncmp(s1, s2, i))
 		{
-			putstr("  Pas bon 🙁");
-			printf(",   %d", i);
+			printf("%d  Pas bon 🙁\n", i);
 			return ;
 		}
 	}
@@ -472,8 +478,7 @@ void    test_memcmp()
         {
                 if (ft_memcmp(s1, s2, i) != memcmp(s1, s2, i))
                 {
-                        putstr("  Pas bon 🙁");
-                        printf(",   %d", i);
+                        printf("%d  Pas bon 🙁\n", i);
 						return ;
                 }
         }
@@ -609,10 +614,12 @@ void	test_calloc()
 
 	if (memcmp(p, e, 4) != 0)
         {
-             putstr("  Pas bon 🙁");
+	     putstr("  Pas bon 🙁");
+	     free(p);
              return ;
         }
 	green();
+	free(p);
 	putstr(" Bravo");
 	reset_color();
 }
@@ -641,6 +648,11 @@ void	test_strdup()
 		putstr("  Pas bon 🙁");
 		return;
 	}
+	free(dest1);
+	free(dest2);
+	free(dest3);
+	free(dest4);
+	free(dest5);
 	green();
 	putstr(" Bravo");
 	reset_color();
@@ -653,16 +665,24 @@ void	test_strjoin()
 	char s2[] = " pas beau";
 	char *result;
 
-
-	int	i = 0;
 	result = ft_strjoin(s1, s2);
-	if ((strcmp(result, "Je suis pas beau") && ++i) || (strcmp(ft_strjoin("J", ""), "J") && ++i))
-		printf("  Pas bon 🙁 %d\n", i);
-	else
+	if (strcmp(result, "Je suis pas beau"))
 	{
-		green();
-		putstr(" Bravo");
+		printf("1  Pas bon 🙁\n");
+		free(result);
+		return ;
 	}
+	free(result);
+	result = ft_strjoin("J", "");
+	if  (strcmp(result, "J"))
+	{
+		printf("2  Pas bon 🙁\n");
+		free(result);
+		return ;
+	}
+	free(result);
+	green();
+	putstr(" Bravo");
 	reset_color();
 
 }
@@ -670,43 +690,75 @@ void	test_strjoin()
 void	test_strtrim()
 {
 	putstr("STRTRIM");
-	if (strcmp(ft_strtrim("abcJe suisbca", "abc"), "Je suis"))
+	char *a = ft_strtrim("abcJe suisbca", "abc");
+	char *b = ft_strtrim("cJe suisb", "abc");
+	char *c = ft_strtrim("abcJbca", "abc");
+	char *d = ft_strtrim("Je suis", "abc");
+	char *e = ft_strtrim("", "abc");
+	if (strcmp(a, "Je suis"))
 		putstr("1  Pas bon 🙁");
-	else if (strcmp(ft_strtrim("cJe suisb", "abc"), "Je suis"))
+	else if (strcmp(b, "Je suis"))
 		putstr("2  Pas bon 🙁");
-	else if (strcmp(ft_strtrim("abcJbca", "abc"), "J"))
+	else if (strcmp(c, "J"))
 		putstr("3  Pas bon 🙁");
-	else if (strcmp(ft_strtrim("Je suis", "abc"), "Je suis"))
+	else if (strcmp(d, "Je suis"))
 		putstr("4  Pas bon 🙁");
-	else if (strcmp(ft_strtrim("", "abc"), ""))
+	else if (strcmp(e, ""))
 		putstr("5  Pas bon 🙁");
 	else
 	{
 		green();
 		putstr(" Bravo");
 	}
+	free(e);
+	free(d);
+	free(c);
+	free(b);
+	free(a);
 	reset_color();
 }
 
 void	test_itoa()
 {
 	putstr("ITOA");
-	if (strcmp(ft_itoa(1), "1"))
+	char *a = ft_itoa(1);
+	char *b = ft_itoa(-1);
+	char *c = ft_itoa(-0);
+	char *d = ft_itoa(2147483647);
+	char *e = ft_itoa(-2147483648);
+	if (strcmp(a, "1"))
 		putstr("1  Pas bon 🙁");
-	else if (strcmp(ft_itoa(-1), "-1"))
+	else if (strcmp(b, "-1"))
 		putstr("2  Pas bon 🙁");
-	else if (strcmp(ft_itoa(-0), "0"))
+	else if (strcmp(c, "0"))
 		putstr("3  Pas bon 🙁");
-	else if (strcmp(ft_itoa(2147483647), "2147483647"))
+	else if (strcmp(d, "2147483647"))
 		putstr("4  Pas bon 🙁");
-	else if (strcmp(ft_itoa(-2147483648), "-2147483648"))
+	else if (strcmp(e, "-2147483648"))
 		putstr("5  Pas bon 🙁");
 	else
 	{
+		free(a);
+		free(b);
+		free(c);
+		free(d);
+		free(e);
 		green();
 		putstr(" Bravo");
 	}
 	reset_color();
+}
+
+void	free_split(char **d)
+{
+	int	i = 0;
+
+	while (d[i])
+	{
+		free(d[i]);
+		i++;
+	}
+	free(d);
 }
 
 void	test_split()
@@ -718,16 +770,20 @@ void	test_split()
 	result = ft_split("Je suis beau", ' ');
 	if ((strcmp(result[0], "Je") || strcmp(result[1], "suis") || 
 			strcmp(result[2], "beau") || result[3] != NULL) && ++i)
-		putstr("1  Pas bon 🙁"); 
+		putstr("1  Pas bon 🙁");
+	free_split(result);
 	result = ft_split ("       ", ' ');
 	if (result[0] != NULL && ++i)
 		putstr("2  Pas bon 🙁");
+	free_split(result);
 	result = ft_split("Je suis pas beau", 'z');
 	if ((strcmp(result[0], "Je suis pas beau") || result[1] != NULL) && ++i)
 		putstr("3  Pas bon 🙁");
+	free_split(result);
 	result = ft_split("J", ' ');
 	if ((strcmp(result[0], "J") || result[1] != NULL) && ++i)
 		putstr("4  Pas bon 🙁");
+	free_split(result);
 	if (i == 0)
 	{
 		green();
@@ -739,19 +795,27 @@ void	test_split()
 void	test_substr()
 {
 	putstr("SUBSTR");
-	if (strcmp(ft_substr("Je suis pas beau", 0, 10), "Je suis pa"))
+	char *a = ft_substr("Je suis pas beau", 0, 10);
+	char *b = ft_substr("Je suis pas beau", 5, 20);
+	char *c = ft_substr("Je suis pas beau", 7, 3);
+	char *d = ft_substr("", 0, 20);
+	if (strcmp(a, "Je suis pa"))
 		putstr("1  Pas bon 🙁");
-	else if (strcmp(ft_substr("Je suis pas beau", 5, 20), "is pas beau"))
+	else if (strcmp(b, "is pas beau"))
 		putstr("2  Pas bon 🙁");
-	else if (strcmp(ft_substr("Je suis pas beau", 7, 3), " pa"))
+	else if (strcmp(c, " pa"))
 		putstr("3  Pas bon 🙁");
-	else if (strcmp(ft_substr("", 0, 20), ""))
+	else if (strcmp(d, ""))
 		putstr("4  Pas bon 🙁");
 	else
 	{
 		green();
 		putstr(" Bravo");
 	}
+	free(a);
+	free(d);
+	free(c);
+	free(b);
 	reset_color();
 }
 
@@ -770,11 +834,14 @@ char	root_one(unsigned int i, char c)
 void	test_strmapi()
 {
 	putstr("STRMAPI");
-	if (strcmp(ft_strmapi("aBcDeF", &root_one), "bCdEfG"))
+	char *a = ft_strmapi("aBcDeF", &root_one);
+	char *b = ft_strmapi("aBc ,DeF", &root_one);
+	char *c = ft_strmapi("z", &root_one);
+	if (strcmp(a, "bCdEfG"))
 		putstr("1  Pas bon 🙁");
-	else if (strcmp(ft_strmapi("aBc ,DeF", &root_one), "bCd ,EfG"))
+	else if (strcmp(b, "bCd ,EfG"))
 		putstr("2  Pas bon 🙁");
-	else if (strcmp(ft_strmapi("z", &root_one), "a"))
+	else if (strcmp(c, "a"))
 		putstr("3  Pas bon 🙁");
 	else
 	{
@@ -782,6 +849,9 @@ void	test_strmapi()
 		putstr(" Bravo");
 		reset_color();
 	}
+	free(c);
+	free(b);
+	free(a);
 }
 
 void	root_one_address(unsigned int i, char *c)
@@ -795,7 +865,7 @@ void	root_one_address(unsigned int i, char *c)
 		*c = *c + 1;
 }
 
-/*void	test_striteri()
+void	test_striteri()
 {
 	putstr("STRITERI");
 	char s1[] = "aBcDeF";
@@ -818,7 +888,7 @@ void	root_one_address(unsigned int i, char *c)
 	}
 	
 }
-*/
+
 void	test_putchar_fd()
 {
 	char s[] = "PUTCHAR_FD\n";
@@ -909,7 +979,7 @@ int main()
 	test_split();
 	test_substr();
 	test_strmapi();
-//	test_striteri();
+	test_striteri();
 	reset_color();
 	test_putchar_fd();
 	test_putstr_fd();
