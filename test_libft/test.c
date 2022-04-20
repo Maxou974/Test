@@ -6,11 +6,11 @@
 /*   By: mabriel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 17:32:54 by mabriel           #+#    #+#             */
-/*   Updated: 2022/04/20 05:07:36 by mabriel          ###   ########.fr       */
+/*   Updated: 2022/04/20 06:17:33 by mabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../../../libft.h"
 #include "stdio.h"
 #include <string.h>
 
@@ -200,7 +200,8 @@ void	test_strlen()
 	putstr("STRLEN");
 	if (ft_strlen("Je suis pas beau") != 16 ||
 			ft_strlen("n") != 1 ||
-			ft_strlen("") != 0)
+			ft_strlen("") != 0 ||
+			ft_strlen(NULL) != 0)
 	{
 		putstr("  Pas bon 🙁");
 			return ;
@@ -218,7 +219,7 @@ void	test_memset()
 	b = malloc(12);
 	ft_memset(b, c, 11);
 	int i = 0;
-	while (i < 10)
+	while (i < 11)
 	{
 		if (b[i] != c)
 		{
@@ -244,7 +245,7 @@ void	test_bzero()
 	b = malloc(12);
 	ft_bzero(b, 11);
 	int i = 0;
-	while (i < 10)
+	while (i < 11)
 	{
 		if (b[i] != '\0')
 		{
