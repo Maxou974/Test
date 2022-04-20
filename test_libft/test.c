@@ -6,7 +6,7 @@
 /*   By: mabriel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 17:32:54 by mabriel           #+#    #+#             */
-/*   Updated: 2021/11/28 02:42:23 by mabriel          ###   ########.fr       */
+/*   Updated: 2022/04/20 05:07:36 by mabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -652,12 +652,16 @@ void	test_strjoin()
 	char s2[] = " pas beau";
 	char *result;
 
+
+	int	i = 0;
 	result = ft_strjoin(s1, s2);
-	if (strcmp(result, "Je suis pas beau") || strcmp(ft_strjoin("J", ""), "J"))
-		printf("  Pas bon 🙁");
+	if ((strcmp(result, "Je suis pas beau") && ++i) || (strcmp(ft_strjoin("J", ""), "J") && ++i))
+		printf("  Pas bon 🙁 %d\n", i);
 	else
+	{
 		green();
-	putstr(" Bravo");
+		putstr(" Bravo");
+	}
 	reset_color();
 
 }
@@ -676,8 +680,10 @@ void	test_strtrim()
 	else if (strcmp(ft_strtrim("", "abc"), ""))
 		putstr("5  Pas bon 🙁");
 	else
+	{
 		green();
-	putstr(" Bravo");
+		putstr(" Bravo");
+	}
 	reset_color();
 }
 
@@ -695,8 +701,10 @@ void	test_itoa()
 	else if (strcmp(ft_itoa(-2147483648), "-2147483648"))
 		putstr("5  Pas bon 🙁");
 	else
+	{
 		green();
-	putstr(" Bravo");
+		putstr(" Bravo");
+	}
 	reset_color();
 }
 
@@ -704,22 +712,26 @@ void	test_split()
 {
 	putstr("SPLIIIIIIIIT");
 	char	**result;
+	int	i = 0;
 
 	result = ft_split("Je suis beau", ' ');
-	if (strcmp(result[0], "Je") || strcmp(result[1], "suis") || 
-			strcmp(result[2], "beau") || result[3] != NULL)
-		putstr("1  Pas bon 🙁");
+	if ((strcmp(result[0], "Je") || strcmp(result[1], "suis") || 
+			strcmp(result[2], "beau") || result[3] != NULL) && ++i)
+		putstr("1  Pas bon 🙁"); 
 	result = ft_split ("       ", ' ');
-	if (result[0] != NULL)
+	if (result[0] != NULL && ++i)
 		putstr("2  Pas bon 🙁");
 	result = ft_split("Je suis pas beau", 'z');
-	if (strcmp(result[0], "Je suis pas beau") || result[1] != NULL)
+	if ((strcmp(result[0], "Je suis pas beau") || result[1] != NULL) && ++i)
 		putstr("3  Pas bon 🙁");
 	result = ft_split("J", ' ');
-	if (strcmp(result[0], "J") || result[1] != NULL)
+	if ((strcmp(result[0], "J") || result[1] != NULL) && ++i)
 		putstr("4  Pas bon 🙁");
-	green();
-	putstr(" Bravo");
+	if (i == 0)
+	{
+		green();
+		putstr(" Bravo");
+	}
 	reset_color();
 }
 
@@ -735,8 +747,10 @@ void	test_substr()
 	else if (strcmp(ft_substr("", 0, 20), ""))
 		putstr("4  Pas bon 🙁");
 	else
+	{
 		green();
-	putstr(" Bravo");
+		putstr(" Bravo");
+	}
 	reset_color();
 }
 
@@ -780,7 +794,7 @@ void	root_one_address(unsigned int i, char *c)
 		*c = *c + 1;
 }
 
-void	test_striteri()
+/*void	test_striteri()
 {
 	putstr("STRITERI");
 	char s1[] = "aBcDeF";
@@ -803,43 +817,62 @@ void	test_striteri()
 	}
 	
 }
-
+*/
 void	test_putchar_fd()
 {
-	char s[] = "PUTCHAR_FD\n Bravo\n";
+	char s[] = "PUTCHAR_FD\n";
+	char d[] = " Bravo\n";
 	int	i = 0;
+	putstr("");
 	while (s[i])
 	{
 		ft_putchar_fd(s[i], 1);
 		i++;
 	}
+	printf("%s", s);
+	i = 0;
+	while (d[i])
+	{
+		ft_putchar_fd(d[i], 1);
+		i++;
+	}
+	printf("%s", d);
 
 }
 
 void	test_putstr_fd()
 {
-
-	ft_putstr_fd("PUTSTR_FD\n Bravo\n", 1);
+	putstr("");
+	ft_putstr_fd("PUTSTR_FD\n", 1);
+	putstr("PUTSTR_FD");
+	ft_putstr_fd(" Bravo\n", 1);
+	putstr(" Bravo\n");
 
 }
 
 void	test_putendl_fd()
 {
 	ft_putendl_fd("PUTENDL", 1);
+	putstr("PUTENDL");
 	ft_putendl_fd(" Bravo", 1);
+	putstr(" Bravo\n");
 }
 
 void	test_putnbr_fd()
 {
 
-	printf("\n-2147483648\n");
+	printf("\n-2147483648 | 2147483647\n");
+
 	ft_putnbr_fd(-2147483648, 1);
-	printf("\n\n2147483647\n");
+	sleep(1);
+	ft_putstr_fd(" | ", 1);
+	sleep(1);
 	ft_putnbr_fd(2147483647, 1);	
 	printf("\n\n0\n");
 	ft_putnbr_fd(0, 1);
 	printf("\n0\n");
 	ft_putnbr_fd(-0, 1);
+	putstr("");
 }
 
 #include <stdlib.h>
@@ -875,10 +908,10 @@ int main()
 	test_split();
 	test_substr();
 	test_strmapi();
-	test_striteri();
+//	test_striteri();
+	reset_color();
 	test_putchar_fd();
 	test_putstr_fd();
 	test_putendl_fd();
 	test_putnbr_fd();
-	putstr("\n\n");
 }
