@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mabriel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mabriel <mabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 17:32:54 by mabriel           #+#    #+#             */
-/*   Updated: 2022/04/20 08:49:59 by mabriel          ###   ########.fr       */
+/*   Updated: 2022/11/16 16:54:00 by mabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	test_isprint()
 	putstr("IS PRINT");
 	for	(int i = 32; i <= 126; i++)
 	{
-		if (ft_isprint(i) == 0)
+		if (ft_isprint(i) != 1)
 		{
 			putstr("  Pas bon 🙁");
 			return ;
@@ -110,7 +110,7 @@ void	test_isprint()
 	}
 	for	(int i = 0; i <= 31; i++)
 	{
-		if (ft_isprint(i) == 1)
+		if (ft_isprint(i) != 0 || ft_isprint(127) != 0)
 		{
 			putstr("  Pas bon 🙁");
 			return ;
@@ -223,7 +223,7 @@ void	test_memset()
 	{
 		if (b[i] != c)
 		{
-			putstr(" Pas bon 🙁");
+			putstr("1 Pas bon 🙁");
 			free(b);
 			return ;
 		}
@@ -231,7 +231,7 @@ void	test_memset()
 	}
 	if (b != ft_memset(b,c + 1,0))
 	{
-			putstr(" Pas bon 🙁");
+			putstr("2 Pas bon 🙁");
 			free(b);
 			return ;
 	}
@@ -325,7 +325,7 @@ void	test_toupper()
 		{
 			if (ft_toupper(i) != i - 32)
 			{
-				putstr("4  Pas bon 🙁");
+				putstr("1  Pas bon 🙁");
 				return ;
 			}
 		}
@@ -333,7 +333,7 @@ void	test_toupper()
 		{
 			if (ft_toupper(i) != i)
 			{
-				putstr("4  Pas bon 🙁");
+				putstr("2  Pas bon 🙁");
 				return ;
 			}
 		}
@@ -341,7 +341,7 @@ void	test_toupper()
 		{
 			if (ft_toupper(i) != i)
 			{
-				putstr("4  Pas bon 🙁");
+				putstr("3  Pas bon 🙁");
 				return ;
 			}
 		}
