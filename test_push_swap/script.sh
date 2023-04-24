@@ -21,7 +21,7 @@ RAND=$(./a.out ${j})
 OUTPUT=$(./push_swap $RAND | ./checker $RAND)
 
 if [ "$OUTPUT" = "OK" ]; then
-	
+	echo -n ""
 else
 	echo "${RED}KO \n${RAND}${NC}"
 	RES=1
@@ -32,7 +32,7 @@ done
 if [ ${RES} = 0 ]; then
 	echo "${GREEN}OK${NC}"
 else
-
+	echo -n ""
 fi
 
 done
@@ -51,7 +51,7 @@ RAND=$(./a.out ${j})
 OUTPUT=$(./push_swap $RAND | ./checker $RAND)
 
 if [ "$OUTPUT" = "OK" ]; then
-	
+	echo -n ""
 else
 	echo "${RED}KO \n${RAND}${NC}"
 	RES=1
@@ -62,7 +62,7 @@ done
 if [ ${RES} = 0 ]; then
 	echo "${GREEN}OK${NC}"
 else
-
+	echo -n ""
 fi
 
 done
@@ -81,7 +81,7 @@ RAND=$(./a.out ${j})
 OUTPUT=$(./push_swap $RAND | ./checker $RAND)
 
 if [ "$OUTPUT" = "OK" ]; then
-	
+	echo -n ""	
 else
 	echo "${RED}KO \n${RAND}${NC}"
 	RES=1
@@ -92,7 +92,7 @@ done
 if [ ${RES} = 0 ]; then
 	echo "${GREEN}OK${NC}"
 else
-
+	echo -n ""
 fi
 
 done
@@ -110,7 +110,7 @@ RAND=$(./a.out ${j})
 OUTPUT=$(./push_swap $RAND | ./checker $RAND)
 
 if [ "$OUTPUT" = "OK" ]; then
-
+	echo -n ""
 else
 	echo "${RED}KO \n${RAND}${NC}"
 	RES=1
@@ -121,7 +121,7 @@ done
 if [ ${RES} = 0 ]; then
 	echo "${GREEN}OK${NC}"
 else
-
+	echo -n ""
 fi
 
 done
@@ -190,14 +190,14 @@ RAND=$(./a.out ${i})
 OUTPUT=$(valgrind --log-file="val" ./push_swap $RAND | ./checker $RAND)
 
 if [ "$OUTPUT" = "OK" ]; then
-
+	echo -n ""
 else
 	echo "${RED}KO \n${RAND}${NC}"
 	RES=1
 fi
 
 if grep "no leaks are possible" val > /dev/null && grep "0 context" val > /dev/null
-then
+then echo -n ""
 else echo "${RED}leaks with stack of size: ${i} \n ${RAND}" ; cat val; OQEFO=1 ; echo "${NC}"
 fi
 
@@ -205,7 +205,7 @@ done
 
 if [ OQEFO ];
 then echo "${GREEN} OK${NC}"
-else
+else secho -n ""
 fi
 
 make clean -C ../..
