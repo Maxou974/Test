@@ -4,8 +4,8 @@ RED="\033[0;31m"
 GREEN="\033[0;32m"
 NC="\033[0m"
 
-make -C ..
-cp ../push_swap .
+make -C ../..
+cp ../../push_swap .
 c++ main.cpp
 
 for j in {1..25}
@@ -208,5 +208,5 @@ then echo "${GREEN} OK${NC}"
 else
 fi
 
-make clean -C ..
+make clean -C ../..
 rm push_swap a.out
